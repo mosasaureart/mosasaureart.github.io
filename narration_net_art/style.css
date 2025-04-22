@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
+        body {
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            font-family: 'KillingFont', sans-serif;
+        }
+        #left-block {
+            width: 50%;
+            background-color: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        #left-block img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        #left-text {
+            width: 90%; /* Ajuste la largeur du texte */
+            text-align: center;
+            font-size: 15px;
+            line-height: 1.5; /* Améliore la lisibilité */
+            padding: 20px;
+            white-space: normal; /* Évite que le texte ne sorte du bloc */
+        }
+        
+        
+        #left-text img {
+            max-width: 100%; /* S'assure que l'image ne dépasse pas */
+            height: auto;
+        }
+        
+        #right-block {
+            width: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        #artwork {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .clickable {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+            animation: glitch-animation 1s infinite;
+        }
+        .glitch::before, .glitch::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('glitch-image.jpg'); /* Remplace avec le bon chemin */
+            opacity: 0.7;
+            mix-blend-mode: screen;
+        }
+        .glitch::before {
+            animation: glitch-before 0.3s infinite alternate;
+        }
+        .glitch::after {
+            animation: glitch-after 0.3s infinite alternate;
+        }
+        
+        @keyframes glitch-animation {
+            0% { transform: translate(0, 0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes glitch-before {
+            0% { transform: translate(-3px, 0); }
+            100% { transform: translate(3px, 0); }
+        }
+        @keyframes glitch-after {
+            0% { transform: translate(3px, 0); }
+            100% { transform: translate(-3px, 0); }
+        }
