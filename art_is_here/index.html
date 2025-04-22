@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orage Binaire</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            font-weight: bold;
+            color: #00FF00;
+            text-shadow: 0 0 15px #00FF00;
+            z-index: 2;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <div class="text-overlay">THE ART HAPPENS HERE</div>
+
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        function drawBackground() {
+            let gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            gradient.addColorStop(0, "#030303");
+            gradient.addColorStop(1, "#0a0a0a");
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function drawLightning() {
+            let startX = Math.random() * canvas.width;
+            let startY = 0;
+            let segments = Math.floor(Math.random() * 15) + 12;
+            let path = [{ x: startX, y: startY }];
+
+            for (let i = 0; i < segments; i++) {
+                let last = path[path.length - 1];
+                let newX = last.x + (Math.random() - 0.5) * 250;
+                let newY = last.y + Math.random() * 170;
+                path.push({ x: newX, y: newY });
+            }
+
+            ctx.lineWidth = 10;
+            ctx.strokeStyle = "rgba(0,255,0,1)"; // Vert électrique
+            ctx.shadowBlur = 80;
+            ctx.shadowColor = "rgba(0,255,0,1)";
+            ctx.beginPath();
+            ctx.moveTo(path[0].x, path[0].y);
+
+            for (let i = 1; i < path.length; i++) {
+                ctx.lineTo(path[i].x, path[i].y);
+            }
+            ctx.stroke();
+
+            ctx.fillStyle = "rgba(0,255,0,1)";
+            ctx.font = "50px 'Share Tech Mono', monospace";
+            for (let i = 0; i < path.length; i++) {
+                let binary = Math.random() > 0.5 ? "0" : "1";
+                ctx.fillText(binary, path[i].x, path[i].y);
+            }
+
+            createSparks(startX, path[path.length - 1].y);
+        }
+
+        function createSparks(x, y) {
+            for (let i = 0; i < 5 + Math.random() * 10; i++) {
+                let sparkX = x + (Math.random() - 0.5) * 100;
+                let sparkY = y + (Math.random() - 0.5) * 50;
+                let size = Math.random() * 3 + 1;
+                
+                ctx.fillStyle = "rgba(0,255,0," + (Math.random() * 0.8 + 0.2) + ")";
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = "rgba(0,255,0,1)";
+                
+                ctx.beginPath();
+                ctx.arc(sparkX, sparkY, size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function stormEffect() {
+            drawBackground();
+            drawLightning();
+            setTimeout(drawLightning, 100);
+            setTimeout(drawBackground, 3000 + Math.random() * 1000);
+            setTimeout(stormEffect, 2000 + Math.random() * 3000);
+        }
+
+        stormEffect();
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
