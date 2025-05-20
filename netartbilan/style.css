@@ -40,3 +40,30 @@ body {
 .art-item a:hover {
   text-decoration: underline;
 }
+/* Ajout à la fin du fichier style.css */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 10px;
+    gap: 30px;
+  }
+
+  .art-item h1 {
+    font-size: 1.5em;
+  }
+
+  .art-item a {
+    font-size: 0.9em;
+    word-break: break-word; /* Coupe proprement les longues URLs */
+  }
+}
+
+@media (max-width: 480px) {
+  .art-item h1 {
+    font-size: 1.2em;
+  }
+
+  .art-item a {
+    font-size: 0.8em;
+  }
+}
+
